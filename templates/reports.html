@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="explanation">
+        <h2>Reports</h2>
+        <p>Here you can see a year report containing what you <strong>planned vs. what happend</strong> for each category.</p>
+        <hr>
+    </div>
+    <div class="content">
+        <div class="left-item">
+            <form class="mycard" action="/reports" method="POST">
+                <div class="mb-3 input-group">
+                    <label for="year" class="input-group-text" id="basic-addon1">Year</label>
+                    <input name="year" class="form-control" id="year" type="number" required placeholder="What year do you want to see?">
+                    <button class="btn btn-primary" type="submit">See year report</button>
+                </div>
+            </form>
+        </div>
+        <div class="right-item mycard">
+            <h1 style="background-color: DarkSlateGray;
+                       color: white;
+                       border-radius: 10px;
+                       padding: 10px;
+                       font-size: 30px;">
+                Showing totals for the year of <strong>{{year}}</strong>
+            </h1>
+            <table class="table">
+                <thead>
+                    <tr class="table-dark">
+                        <th style="width:60%;">Category</th>
+                        <th>Total Planned</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category in categories %}
+                        <tr>
+                            <td>
+                                {% if category['in_out'] == 'in' %}
+                                    <span style="color:green">🢁  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
+                                {% else %}
+                                    <span style="color: red">🢃  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{category['planned']}}
+                            </td>
+                            <td>
+                                {{category['total']}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

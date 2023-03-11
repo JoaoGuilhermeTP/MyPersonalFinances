@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="explanation">
+        <h2>Budgets</h2>
+        <p>Here is where you can set a budget plan for a given period of time. Choose the <strong>month</strong> and <strong>year</strong> to see and update the respective budget.</p>
+        <hr>
+    </div>
+    <div class="content">
+        <!-----------------------------------FORM 1------------------------------------>
+        <div class="left-item">
+            <div class="mycard">
+                <form  method="POST" action="/budget">
+                    <div class="mb-3 input-group">
+                        <label class="input-group-text" for="month">Month</label>
+                        <select class="form-select" name="month" id="month">
+                            {% if monthSelected %}
+                                <option disabled value="">Select the month</option>
+                                {% for month in months %}
+                                    {% if month == monthSelected %}
+                                        <option selected value="{{month}}">{{month}}</option>
+                                    {% else %}
+                                        <option value="{{month}}">{{month}}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% else %}
+                                <option selected disabled value="">Select the month</option>
+                                {% for month in months %}
+                                    <option value="{{month}}">{{month}}</option>
+                                {% endfor %}
+                            {% endif %}
+                        </select>
+                        </div>
+                        <div class="mb-3 input-group">
+                            <label for="year" class="input-group-text" id="basic-addon1">Year</label>
+                            {% if yearSelected %}
+                                <input class="form-control" value="{{yearSelected}}" type="number" name="year" id="year">
+                            {% else %}
+                                <input class="form-control" type="number" name="year">
+                            {% endif %}
+                        </div>
+                        <div class="d-grid gap-2 mx-auto">
+                            <button class="btn btn-primary" type="submit">See budget</button>
+                            <button class="btn btn-primary" type="submit" form="saveBudget" style="background-color: green">Save Budget</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+        <!-----------------------------------FORM 2------------------------------------>
+        <div class="right-item mycard">
+            <h1 style="background-color: DarkSlateGray;
+                       color: white;
+                       border-radius: 10px;
+                       padding: 10px;
+                       font-size: 30px;">
+                Showing budget for the month of <strong>{{monthSelected}}/{{yearSelected}}</strong>
+            </h1>
+            <form id="saveBudget" action="/addBudget" method="POST">
+                <table style="width: 100%" class="table">
+                    <thead>
+                        <tr class="table-dark">
+                            <th style="width:50%;">CATEGORY</th><th>Planned</th><th>Actual</th>
+                        </tr>
+                    </thead>
+                    {% for category in categories %}
+                        <tr>
+                            <td>
+                                {% if category['in_out'] == 'in' %}
+                                    <span style="color:green">🢁  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
+                                {% else %}
+                                    <span style="color: red">🢃  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
+                                {% endif %}
+                                <input type="hidden" name="{{category['id']}}" value="{{category['id']}}">
+                            </td>
+                            <td>
+                                {% set ns = namespace(found=false) %}
+                                {% for budget in budgets %}
+                                    {% if category["id"] == budget["category_id"] and budget["marker"] %}
+                                        <input class="form-control" type="number" name="planned_{{category['id']}}" value="{{budget['planned']}}" id="{{category['id']}}">
+                                        {% set ns.found = true %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if ns.found == false %}
+                                    <input placeholder="Nothing planned :(" class="form-control" type="number" name="planned_{{category['id']}}" id="{{category['id']}}">
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{category["total"]}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                <input type="hidden" name="month" value="" id="selectedMonth">
+                <input type="hidden" name="year" value="" id="selectedYear">
+            </form>
+        </div>
+    </div>
+    <script>
+        document.getElementById("selectedMonth").value = document.getElementById("month").value;
+        document.getElementById("selectedYear").value = document.getElementById("year").value;
+   </script>
+{% endblock content %}

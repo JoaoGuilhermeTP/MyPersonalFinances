@@ -1,0 +1,185 @@
+.login_register_forms {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding: 60px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.9);
+    border-radius: 50px;
+    background-color: #f1f1f1;
+  }
+
+  .login_register_forms:hover {
+    box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.6);
+    background-color: #ffffff;
+    transition: 0.6s;
+  }
+
+  .login_register_forms:not(hover) {
+    transition: 0.9s;
+  }
+
+  .mycard {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 7px;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+    background-color: #f9f9f9;
+  }
+
+  .mycard:hover {
+    background-color: white;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
+    transition: 0.4s;
+  }
+  .mycard:not(hover) {
+    transition: 0.9s;
+  }
+
+nav {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    background-color: black;
+  }
+
+  ul.nav {
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-item {
+    border-radius: 5px;
+  }
+
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    display: block;
+    border-radius: 10px;
+  }
+
+  .nav-link.active {
+    color: white;
+  }
+
+  .nav-link.active:hover {
+    color: black;
+  }
+
+.logo {
+    color: green;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    background-color: #f0f0f0;
+    transition: 0.3s;
+  }
+
+.table-container {
+    padding: 20px;
+    width: 100%;
+    align-content: center;
+}
+
+.deleteAll {
+    margin-top: -5px;
+}
+
+table th:hover {
+    background-color: white;
+    color: black;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+tr:nth-child(odd) {
+    background-color: white;
+}
+
+tr:hover {
+    background-color: #9a9a9a;
+    color: white;
+    transition: 0.3s;
+}
+
+th {
+    cursor: pointer;
+    background-color: green;
+    text-align: center;
+}
+
+table {
+    table-layout: fixed;
+}
+
+.table-container {
+    padding: 10px;
+}
+
+.content {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+.left-item {
+    width: 40%;
+    padding: 0 10px;
+}
+
+.right-item {
+    width: 60%;
+    padding: 10px;
+}
+
+.explanation {
+    padding: 0px 20px;
+}
+
+@media (max-width: 800px) {
+    .content {
+        flex-direction: column;
+    }
+    .left-item, .right-item {
+        width: 100%;
+        margin: 0px;
+    }
+    .login_register_forms {
+        width: 100%;
+        padding: 30px;
+    }
+
+    table{
+        padding: 0px;
+        font-size: 60%;
+    }
+    table button {
+        font-size: 60%;
+    }
+
+    td input {
+        padding: 0px;
+    }
+
+    td input::placeholder {
+        padding: 0px;
+        font-size: 60%;
+        margin: 0px;
+    }
+  }
