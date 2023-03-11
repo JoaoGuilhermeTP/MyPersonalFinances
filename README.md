@@ -2,9 +2,9 @@
 #### Video Demo:  <URL HERE>
 #### Description:
 
-## Introduction
-
 This is a basic application intended to help people organize and keep track of their personal finances. It allows users to register with a username and password, so that they can have access to their own finance data, and manage it the way they like.
+
+If you want to try out this web application, you can access it through the following link: http://joaotasca.pythonanywhere.com/
 
 ### Features
 
