@@ -38,6 +38,14 @@
                                 <input class="form-control" type="number" name="year">
                             {% endif %}
                         </div>
+                        <div>
+                            <label for="filter">Filter out categories without budget and with no transactions </label>
+                            {% if filt %}
+                                <input type="checkbox" name="filter" value="true" checked>
+                            {% else %}
+                                <input type="checkbox" name="filter" value="true">
+                            {% endif %}
+                        </div>
                         <div class="d-grid gap-2 mx-auto">
                             <button class="btn btn-primary" type="submit">See budget</button>
                             <button class="btn btn-primary" type="submit" form="saveBudget" style="background-color: green">Save Budget</button>
@@ -62,31 +70,33 @@
                         </tr>
                     </thead>
                     {% for category in categories %}
-                        <tr>
-                            <td>
-                                {% if category['in_out'] == 'in' %}
-                                    <span style="color:green">🢁  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
-                                {% else %}
-                                    <span style="color: red">🢃  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
-                                {% endif %}
-                                <input type="hidden" name="{{category['id']}}" value="{{category['id']}}">
-                            </td>
-                            <td>
-                                {% set ns = namespace(found=false) %}
-                                {% for budget in budgets %}
-                                    {% if category["id"] == budget["category_id"] and budget["marker"] %}
-                                        <input class="form-control" type="number" name="planned_{{category['id']}}" value="{{budget['planned']}}" id="{{category['id']}}">
-                                        {% set ns.found = true %}
+                        {% if category['show'] %}
+                            <tr>
+                                <td>
+                                    {% if category['in_out'] == 'in' %}
+                                        <span style="color:green">&#X1F7E2;  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
+                                    {% else %}
+                                        <span style="color: red">&#X1F534;  </span><label for="{{category['id']}}">{{category["category_name"]}}</label>
                                     {% endif %}
-                                {% endfor %}
-                                {% if ns.found == false %}
-                                    <input placeholder="Nothing planned :(" class="form-control" type="number" name="planned_{{category['id']}}" id="{{category['id']}}">
-                                {% endif %}
-                            </td>
-                            <td>
-                                {{category["total"]}}
-                            </td>
-                        </tr>
+                                    <input type="hidden" name="{{category['id']}}" value="{{category['id']}}">
+                                </td>
+                                <td>
+                                    {% set ns = namespace(found=false) %}
+                                    {% for budget in budgets %}
+                                        {% if category["id"] == budget["category_id"] and budget["marker"] and not budget['hide'] %}
+                                            <input class="form-control" type="number" name="planned_{{category['id']}}" value="{{budget['planned']}}" id="{{category['id']}}">
+                                            {% set ns.found = true %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if ns.found == false %}
+                                        <input placeholder="Nothing planned :(" class="form-control" type="number" name="planned_{{category['id']}}" id="{{category['id']}}">
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{category["total"]}}
+                                </td>
+                            </tr>
+                        {% endif %}
                     {% endfor %}
                 </table>
                 <input type="hidden" name="month" value="" id="selectedMonth">

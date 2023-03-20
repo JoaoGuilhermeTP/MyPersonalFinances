@@ -19,8 +19,8 @@
     <div class="left-item">
         <!--Form for adding transactions-->
         <div class="mycard">
-            <form id="add_transaction" action="add_transaction" method="POST">
-                <h5 style="text-align:center">Add transactions</h5>
+            <button class="toggle_button" form-id="add_transaction">Add Transactions</button>
+            <form id="add_transaction" action="add_transaction" method="POST" class="hidden">
                 <div class="mb-3 input-group">
                     <label for="date" class="input-group-text" id="basic-addon1">Date</label>
                     <input id="date" class="form-control" type="date" required name="date" placeholder="Date">
@@ -37,13 +37,11 @@
                     <select id="category" class="form-select" name="categorie">
                         <option selected>Select the category</option>
                         {% for category in categories %}
-                        {% if category['in_out'] == 'out' %}
-                        <option style="background-color: AntiqueWhite" value="{{category['category_name']}}">
-                            {{category['category_name']}}</option>
-                        {% else %}
-                        <option style="background-color: PaleGreen" value="{{category['category_name']}}">
-                            {{category['category_name']}}</option>
-                        {% endif %}
+                            {% if category['in_out'] == 'out' %}
+                                <option style="background-color: AntiqueWhite" value="{{category['category_name']}}">{{category['category_name']}}</option>
+                            {% else %}
+                                <option style="background-color: PaleGreen" value="{{category['category_name']}}">{{category['category_name']}}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                     <label for="value" class="input-group-text">Value</label>
@@ -59,8 +57,8 @@
 
         <!--Form for filtering transaction-->
         <div class="mycard">
-            <form id="filter_transactions" action="/" method="POST">
-                <h5 style="text-align:center">Filter transactions</h5>
+            <button class="toggle_button" form-id="filter_transactions">Filter Transactions</button>
+            <form id="filter_transactions" action="/" method="POST" class="hidden">
                 <div class="mb-3 input-group">
                     <label for="start_date" class="input-group-text" id="basic-addon1">Start date</label>
                     <input value="{{filt['start_date']}}" type="date" name="start_date" id="start_date"
@@ -108,7 +106,7 @@
         <form style="padding-right: 10px" id="deleteAll" action="/deleteAll" method="POST">
             <div class="d-grid gap-2 mx-auto deleteAll">
                 <button form="deleteAll" style="background-color: IndianRed" type="submit" class="btn btn-primary"
-                    value="Delete All">Delete all transactions</button>
+                    value="Delete All" onclick="return confirmDeleteTransactions()">Delete all transactions</button>
             </div>
         </form>
     </div>
@@ -118,10 +116,10 @@
         <table class="tablesorter table">
             <thead>
                 <tr class="table-dark">
-                    <th>DATE</th>
-                    <th>BANK</th>
-                    <th>CATEGORIE</th>
-                    <th style="width: 15%;" data-sort-type="number">VALUE</th>
+                    <th title="Click to sort">DATE</th>
+                    <th title="Click to sort">BANK</th>
+                    <th title="Click to sort">CATEGORIE</th>
+                    <th title="Click to sort" style="width: 15%;" data-sort-type="number">VALUE</th>
                     <th style="width: 10%; padding: 0px;"></th>
                 </tr>
             </thead>

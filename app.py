@@ -116,18 +116,34 @@ def index():
 @app.route("/add_transaction", methods=['POST'])
 @login_required
 def add_transaction():
+
+    # Get categories from database and store in dictionary
     categories = db.execute("SELECT * FROM categories")
-    names = [categorie['category_name'] for categorie in categories]
+
+    # Get values informed by user when adding the transaction
     date = request.form.get('date')
     bank = request.form.get('bank')
-    categorie = request.form.get('categorie')
+    categorie_name = request.form.get('categorie')
     value = float(request.form.get('value'))
-    if not date or not bank or not categorie or not value or categorie not in names:
+
+    # Check if every field was filled
+    if not date or not bank or not categorie_name or not value:
         return apology("Must fill all fields")
-    in_out = db.execute("SELECT in_out FROM categories WHERE category_name = ?", categorie)[0]["in_out"]
-    if in_out == "out":
+
+    # Check if category name is in database
+    names = [category['category_name'] for category in categories]
+    if categorie_name not in names:
+        return apology("Not a valid category")
+
+    # Figure out if the value should be positive or negative, based on the category "in_out" field
+    in_out = db.execute("SELECT in_out FROM categories WHERE category_name = ?", categorie_name)[0]["in_out"]
+    if (in_out == "out" and value > 0) or (in_out == "in" and value < 0):
         value = value * -1
-    db.execute("INSERT INTO transactions (date, bank, categorie, value, user_id) VALUES (?, ?, ?, ?, ?)", date, bank, categorie, value, session['user_id'])
+
+    # Insert transaction into database
+    db.execute("INSERT INTO transactions (date, bank, categorie, value, user_id) VALUES (?, ?, ?, ?, ?)", date, bank, categorie_name, value, session['user_id'])
+
+    # Redirect to root
     return redirect('/')
 
 
@@ -152,37 +168,84 @@ def delete_transaction():
 @app.route("/budget", methods=["GET", "POST"])
 @login_required
 def budget():
+    filt = False
+    # First, get a list containing all the months in a year
     months = [calendar.month_name[i] for i in range(1,13)]
+
+    # The variables month, year amd filt will be set according to the request method
+
+    # If the request method is GET
     if request.method == "GET":
+
+        # If user was redirected via GET from the /addBudget route with month and year as arguments, meaning they have changed some budget, set year and month to wathever was previously in the form
         if request.args.get('year') and request.args.get('month'):
             month = request.args.get('month')
             year = request.args.get('year')
+
+        # Else if they are accessing this route from scracth, set month and year to the current date
         else:
             today = datetime.now()
             month = today.strftime("%B")
             year = today.strftime("%Y")
-    else:
+
+    # Else if the request method is POST, set month and year to whatever the user inputed via form, ad get wether user checked the filter checkbox
+    elif request.method == "POST":
         month = request.form.get("month")
         year = request.form.get("year")
-    if not month or not year:
-        return apology("Please, fill in every field")
+        filt = request.form.get("filter")
+
+        # Check if user has filled the form correctly
+        if not month or not year:
+            return apology("Please, fill in every field")
+
+    # The following lines will be executed wether the method was POST or GET, if the function didn't return yet duo to missfilling the form
+
+    # Make year into an integer
     year = int(year)
-    categories = db.execute("SELECT * FROM categories")
+
+    # Get first day and last day of the month
     first_day = datetime.strptime(f"{year}-{month}-01", "%Y-%B-%d").date()
     last_day = get_last_day_of_month(year, month)
+
+    # Get categories from database and store as dictionary
+    categories = db.execute("SELECT * FROM categories")
+
+    # Get transactions and budgets from database and store as dictionary, filtering by user id, first day and last day of the month
     transactions = db.execute("SELECT * FROM transactions WHERE user_id = ? AND date >= ? AND date <= ?", session["user_id"], first_day, last_day)
-    for category in categories:
-        total = 0
-        for transaction in transactions:
-            if transaction["categorie"] == category["category_name"]:
-                total = total + transaction["value"]
-        category["total"] = total
+
+    # Get budgets from database and store as dictionary, filtering by user id, month and year
     budgets = db.execute("SELECT * FROM budgets WHERE user_id = ? AND month = ? AND year = ?", session["user_id"], month, year)
+
+    # For each category in categories dictionary
     for category in categories:
+
+        # Create key-value pair to decide whether the categorie whould be shown or not. Initialize with the value of True, meaning it should show.
+        category["show"] = True
+        category["budget"] = False
+
+        #Create a Key called "total" with the value of 0
+        category["total"] = 0
+
+        # For each transaction in the transactions dictionary
+        for transaction in transactions:
+
+            # Transaction name corresponds to category name, update the value for the "total" key
+            if transaction["categorie"] == category["category_name"]:
+                category["total"] += transaction["value"]
+
+        # For each budget, check if the category_id for this budget corresponts with current categories' id. If it does, it means there is a budget for that category.
+        # A new key with the value of True will be added to this budget. This will be used in the HTML file to know when to show a budget of a blank input field
         for budget in budgets:
             if budget["category_id"] == category["id"]:
                 budget["marker"] = True
-    return render_template("budget.html", months=months, budgets=budgets, method=request.method, monthSelected=month, yearSelected=year, categories=categories)
+                category["budget"] = True
+
+        if filt:
+            if not category["budget"] and category["total"] == 0:
+                category["show"] = False
+
+    # Renter budget.html template, passing necessary variables
+    return render_template("budget.html", months=months, budgets=budgets, method=request.method, monthSelected=month, yearSelected=year, categories=categories, filt=filt)
 
 
 
@@ -225,10 +288,12 @@ def addBudget():
 @app.route("/reports", methods=["GET", "POST"])
 @login_required
 def reports():
+    filt = False
     if request.method == "GET":
         year = datetime.now().strftime("%Y")
     else:
         year = request.form.get("year")
+        filt = request.form.get("filter")
     if not year:
         return apology("Please, fill in every field")
     year = int(year)
@@ -240,13 +305,17 @@ def reports():
     for category in categories:
         category['planned'] = 0
         category['total'] = 0
+        category['show'] = True
         for budget in budgets:
             if budget['category_id'] == category['id']:
                 category['planned'] += budget['planned']
         for transaction in transactions:
             if transaction["categorie"] == category["category_name"]:
                 category['total'] += transaction["value"]
-    return render_template('reports.html', categories=categories, year=year)
+        if filt:
+            if category['planned'] == 0 and category['total'] == 0:
+                category['show'] = False
+    return render_template('reports.html', categories=categories, year=year, filt=filt)
 
 
 

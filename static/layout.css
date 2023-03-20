@@ -9,36 +9,67 @@
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.9);
     border-radius: 50px;
     background-color: #f1f1f1;
-  }
+}
 
-  .login_register_forms:hover {
+.login_register_forms:hover {
     box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.6);
     background-color: #ffffff;
     transition: 0.6s;
-  }
+}
 
-  .login_register_forms:not(hover) {
+.login_register_forms:not(hover) {
     transition: 0.9s;
-  }
+}
 
-  .mycard {
+.mycard {
     display: flex;
     flex-direction: column;
     padding: 20px;
     margin: 0px 7px;
     margin-bottom: 30px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    border: solid #aaaaaa;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
     border-radius: 20px;
-    background-color: #f9f9f9;
-  }
+    background-color: #101010;
+    color: white;
+}
 
-  .mycard:hover {
-    background-color: white;
+.mycard:hover {
+    background-color: #f1f1f1;
+    border: solid black;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     transition: 0.4s;
-  }
-  .mycard:not(hover) {
+    color: black;
+}
+
+.mycard:not(hover) {
     transition: 0.9s;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle_button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .toggle_button:hover {
+    background-color: #3e8e41;
+  }
+
+  .toggle_button:focus {
+    outline: none;
   }
 
 nav {
@@ -49,42 +80,42 @@ nav {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     background-color: black;
-  }
+}
 
-  ul.nav {
+ul.nav {
     display: flex;
     justify-content: center;
-  }
+}
 
-  .nav-item {
+.nav-item {
     border-radius: 5px;
-  }
+}
 
-  .nav-link {
+.nav-link {
     color: white;
     text-decoration: none;
     display: block;
     border-radius: 10px;
-  }
+}
 
-  .nav-link.active {
+.nav-link.active {
     color: white;
-  }
+}
 
-  .nav-link.active:hover {
+.nav-link.active:hover {
     color: black;
-  }
+}
 
 .logo {
     color: green;
     text-align: center;
     text-decoration: none;
-  }
+}
 
-  .nav-link:hover {
+.nav-link:hover {
     background-color: #f0f0f0;
     transition: 0.3s;
-  }
+}
 
 .table-container {
     padding: 20px;
@@ -156,19 +187,23 @@ table {
     .content {
         flex-direction: column;
     }
-    .left-item, .right-item {
+
+    .left-item,
+    .right-item {
         width: 100%;
         margin: 0px;
     }
+
     .login_register_forms {
         width: 100%;
         padding: 30px;
     }
 
-    table{
+    table {
         padding: 0px;
         font-size: 60%;
     }
+
     table button {
         font-size: 60%;
     }
@@ -182,4 +217,4 @@ table {
         font-size: 60%;
         margin: 0px;
     }
-  }
+}
