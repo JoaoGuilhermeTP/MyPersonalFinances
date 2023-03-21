@@ -38,12 +38,12 @@
                                 <input class="form-control" type="number" name="year">
                             {% endif %}
                         </div>
-                        <div>
-                            <label for="filter">Filter out categories without budget and with no transactions </label>
+                        <div class="form-check form-switch">
+                            <label class="form-check-label" for="filter">Filter out categories without budget and with no transactions </label>
                             {% if filt %}
-                                <input type="checkbox" name="filter" value="true" checked>
+                                <input class="form-check-input" type="checkbox" name="filter" value="true" checked>
                             {% else %}
-                                <input type="checkbox" name="filter" value="true">
+                                <input class="form-check-input" type="checkbox" name="filter" value="true">
                             {% endif %}
                         </div>
                         <div class="d-grid gap-2 mx-auto">
