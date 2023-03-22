@@ -14,9 +14,11 @@
 
     </head>
     <body>
-        <div style="style=width:100%; display=flex; margin: 0 auto; justify-content: center">
-            <h1 style="text-align: center"><a href="/" class="logo">My Personal Finances</a><h1>
-        </div>
+        <h1 id="logoContainer">
+            <a href="/" id="logo">
+                My Personal Finances
+            </a>
+        </h1>
         <header>
             {% if session["user_id"] %}
             <nav class="bg-light.bg-gradient">

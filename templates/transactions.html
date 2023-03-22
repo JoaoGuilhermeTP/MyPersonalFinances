@@ -5,13 +5,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.min.js"></script>
 <script src="/static/transactions.js"></script>
 
-<div class="explanation">
+<div class="explanation mycard">
     <h2>Transactions</h2>
     <p>Here you can add, delete and see your transactions. Use the <strong>"Add transactions"</strong> menu to insert
         the information for the transaction you want to add.</p>
     <p>In order to better visualize your transactions, you can use the <strong>"Filter Transactions"</strong> menu to
         specify which ones you want focus</p>
-    <hr>
 </div>
 
 <!---Container for both forms-->
@@ -51,9 +50,8 @@
                     <label for="value" class="input-group-text">Value</label>
                     <input id="value" type="number" step="0.01" class="form-control" id="value" required name="value" placeholder="Value">
                 </div>
-                <div class="d-grid gap-2 mx-auto">
-                    <button form="add_transaction" style="background-color: green" type="submit"
-                        class="btn btn-primary" value="Add>">Add</button>
+                <div class="buttonContainer">
+                    <button form="add_transaction" type="submit" class="mainFormButton blueButton greenOnHover" value="Add>">Add</button>
                 </div>
             </form>
         </div>
@@ -103,80 +101,76 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="d-grid gap-2 mx-auto">
-                    <button style="margin-top:0px" type="submit" class="btn btn-primary" id="filter_button"
-                        value="Filter>">Filter</button>
-                    <span style="text-align: center"><a href="/">Clear Filters</a></span>
+                <div class="buttonContainer">
+                    <button type="submit" class="mainFormButton blueButton">Filter</button>
+                    <span><button class="mainFormButton blueButton"><a class="buttonLink" href="/">Clear Filters</a></button></span>
                 </div>
             </form>
         </div>
-        <form style="padding-right: 10px" id="deleteAll" action="/deleteAll" method="POST">
-            <div class="d-grid gap-2 mx-auto deleteAll">
-                <button form="deleteAll" style="background-color: IndianRed" type="submit" class="btn btn-primary"
-                    value="Delete All" onclick="return confirmDeleteTransactions()">Delete all transactions</button>
-            </div>
+        <form class="buttonContainerCenter" action="/deleteAll" method="POST">
+            <button form="deleteAll" type="submit" class="mainFormButton blueButton redOnHover" onclick="return confirmDeleteTransactions()">Delete all transactions</button>
         </form>
     </div>
 
     <!--Table with transactions-->
-    <div class="table-container right-item mycard">
-        <table class="tablesorter table">
-            <thead>
-                <tr class="table-dark">
-                    <th title="Click to sort">DATE</th>
-                    <th title="Click to sort">BANK</th>
-                    <th title="Click to sort">CATEGORIE</th>
-                    <th title="Click to sort" style="width: 15%;" data-sort-type="number">VALUE</th>
-                    <th style="width: 10%; padding: 0px;"></th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for transaction in transactions %}
-                {% set show = True %}
-                {% if filt["start_date"] %}
-                {% if transaction["date"] < filt["start_date"] %} {% set show=False %} {% endif %} {% endif %} {% if
-                    filt["end_date"] %} {% if transaction["date"]> filt["end_date"] %}
-                    {% set show = False %}ls
-
-                    {% endif %}
-                    {% endif %}
-                    {% if filt["filter_bank"] %}
-                    {% if transaction["bank"] != filt["filter_bank"] %}
-                    {% set show = False %}
-                    {% endif %}
-                    {% endif %}
-                    {% if filt["filter_category"] %}
-                    {% if transaction["categorie"] != filt["filter_category"] %}
-                    {% set show = False %}
-                    {% endif %}
-                    {% endif %}
-                    {% if show %}
-                    <tr>
-                        <td>
-                            {{transaction["date"]}}
-                        </td>
-                        <td>
-                            {{transaction["bank"]}}
-                        </td>
-                        <td>
-                            {{transaction["categorie"]}}
-                        </td>
-                        <td>
-                            {{transaction["value"]}}
-                        </td>
-                        <td style="padding-left: 0px">
-                            <form style="padding: 0px; margin: 0px;" action="/delete_transaction" method="POST">
-                                <input style="margin: 0px; padding: 0px;" type="hidden" value='{{transaction["id"]}}'
-                                    name="transaction_id">
-                                <button style="background-color: IndianRed; padding: 2px; margin: 0px;" type="submit"
-                                    class="btn btn-primary">Del</button>
-                            </form>
-                        </td>
+    <div class="right-item">
+        <div class="mycard tableCard">
+            <table class="tablesorter">
+                <thead>
+                    <tr class="table-dark">
+                        <th title="Click to sort">DATE</th>
+                        <th title="Click to sort">BANK</th>
+                        <th title="Click to sort">CATEGORIE</th>
+                        <th title="Click to sort" data-sort-type="number">VALUE</th>
+                        <th></th>
                     </tr>
-                    {% endif %}
-                    {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    {% set show = True %}
+                    {% if filt["start_date"] %}
+                    {% if transaction["date"] < filt["start_date"] %} {% set show=False %} {% endif %} {% endif %} {% if
+                        filt["end_date"] %} {% if transaction["date"]> filt["end_date"] %}
+                        {% set show = False %}ls
+
+                        {% endif %}
+                        {% endif %}
+                        {% if filt["filter_bank"] %}
+                        {% if transaction["bank"] != filt["filter_bank"] %}
+                        {% set show = False %}
+                        {% endif %}
+                        {% endif %}
+                        {% if filt["filter_category"] %}
+                        {% if transaction["categorie"] != filt["filter_category"] %}
+                        {% set show = False %}
+                        {% endif %}
+                        {% endif %}
+                        {% if show %}
+                        <tr>
+                            <td>
+                                {{transaction["date"]}}
+                            </td>
+                            <td>
+                                {{transaction["bank"]}}
+                            </td>
+                            <td>
+                                {{transaction["categorie"]}}
+                            </td>
+                            <td>
+                                {{transaction["value"]}}
+                            </td>
+                            <td>
+                                <form action="/delete_transaction" method="POST">
+                                    <input type="hidden" value='{{transaction["id"]}}' name="transaction_id">
+                                    <button class="tableButton mainFormButton blueButton" type="submit">Del</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

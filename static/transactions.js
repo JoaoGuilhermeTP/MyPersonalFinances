@@ -1,20 +1,24 @@
 document.addEventListener("DOMContentLoaded", function() {
+
     // Select all the table cells in the "VALUE" column
     var cells = document.querySelectorAll("td:nth-child(4)");
+
     // Extract the numerical values from the cells
     var values = extractValuesFromCells(cells);
+
     // Calculate the sum of the values
     var sum = calculateSum(values);
+
     // Create a new div element to display the sum
     var balanceDiv = document.createElement("div");
     balanceDiv.textContent = "Balance: " + sum;
-    // Append the div to a container element after the table
-    var tableContainer = document.querySelector(".table-container");
-    tableContainer.appendChild(balanceDiv);
+    balanceDiv.style.fontSize = "120%";
+    balanceDiv.style.display = "flex";
+    balanceDiv.style.justifyContent = "right";
 
-    function confirmDelete() {
-        return confirm("Are you sure you want to delete your account?");
-    }
+    // Append the div to a container element after the table
+    var tableCard = document.querySelector(".tableCard");
+    tableCard.appendChild(balanceDiv);
 
     $(".tablesorter").tablesorter({
         headers: {
@@ -36,6 +40,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+
 /**
  * Extracts numerical values from an array of table cells.
  * @param {NodeList} cells - An array-like object containing table cell elements.
@@ -50,6 +55,8 @@ function extractValuesFromCells(cells) {
   return values;
 }
 
+
+
 /**
  * Calculates the sum of an array of numbers.
  * @param {number[]} values - An array of numbers to sum.
@@ -62,6 +69,8 @@ function calculateSum(values) {
   }
   return sum;
 }
+
+
 
 function confirmDeleteTransactions() {
     return confirm("Are you sure you want to delete all of your transactions?");

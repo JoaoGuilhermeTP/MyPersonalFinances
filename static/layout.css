@@ -1,3 +1,21 @@
+#logoContainer {
+    display: flex;
+    justify-content: center;
+    color: black;
+}
+
+#logoContainer {
+    background-image: linear-gradient(to bottom, white 50%, #24305C30);
+    margin: 0;
+    padding: 5px;
+}
+
+#logo {
+    color: #1D337A;
+    text-align: center;
+    text-decoration: none;
+}
+
 .login_register_forms {
     display: flex;
     flex-direction: column;
@@ -27,19 +45,17 @@
     padding: 20px;
     margin: 0px 7px;
     margin-bottom: 30px;
-    border: solid #aaaaaa;
+    border: solid #9BB3E050;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
     border-radius: 20px;
-    background-color: #101010;
-    color: white;
+    background-color: #BBBEC850;
 }
 
 .mycard:hover {
     background-color: #f1f1f1;
-    border: solid black;
+    border: solid #263A6160;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     transition: 0.4s;
-    color: black;
 }
 
 .mycard:not(hover) {
@@ -50,8 +66,25 @@
     display: none;
 }
 
-.toggle_button {
-    background-color: #4CAF50;
+.buttonContainer {
+    display: flex;
+    justify-content: right;
+}
+
+.buttonContainerCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.greenButton {
+    background-color: green;
+}
+
+.blueButton {
+    background-color: #24305C;
+}
+
+.mainFormButton {
     border: none;
     color: white;
     padding: 10px 20px;
@@ -62,15 +95,52 @@
     margin: 10px;
     cursor: pointer;
     border-radius: 5px;
-  }
+}
 
-  .toggle_button:hover {
-    background-color: #3e8e41;
-  }
+.tableButton {
+    width: 100%;
+    padding: 5px;
+    margin: 0px;
+    font-size: 80%;
+}
 
-  .toggle_button:focus {
+.toggle_button {
+    background-color: #24305C;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.toggle_button:hover {
+    background-color: #5A79E8;
+    transition: 0.4s;
+}
+
+.toggle_button:focus {
     outline: none;
-  }
+}
+
+.buttonLink {
+    text-decoration: none;
+    color: white;
+}
+
+.redOnHover:hover {
+    background-color: red;
+    transition: 0.7s;
+}
+
+.greenOnHover:hover {
+    background-color: green;
+    transition: 0.7s;
+}
 
 nav {
     display: flex;
@@ -78,8 +148,8 @@ nav {
     margin: 0 auto;
     margin-bottom: 15px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-    border-radius: 10px;
-    background-color: black;
+    border-radius: 5px;
+    background-color: #24305C;
 }
 
 ul.nav {
@@ -106,36 +176,20 @@ ul.nav {
     color: black;
 }
 
-.logo {
-    color: green;
-    text-align: center;
-    text-decoration: none;
-}
-
 .nav-link:hover {
     background-color: #f0f0f0;
     transition: 0.3s;
 }
 
-.table-container {
-    padding: 20px;
-    width: 100%;
-    align-content: center;
-}
-
-.deleteAll {
-    margin-top: -5px;
-}
-
 table th:hover {
-    background-color: white;
+    background-color: #5A79E830;
     color: black;
     cursor: pointer;
     transition: 0.4s;
 }
 
 tr:nth-child(even) {
-    background-color: #f1f1f1;
+    background-color: #788AAD05;
 }
 
 tr:nth-child(odd) {
@@ -143,23 +197,33 @@ tr:nth-child(odd) {
 }
 
 tr:hover {
-    background-color: #9a9a9a;
+    background-color: #263A6190;
     color: white;
     transition: 0.3s;
 }
 
+.tableTop {
+    background-color: #2B346B;
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;"
+}
+
 th {
     cursor: pointer;
-    background-color: green;
-    text-align: center;
+    background-color: black;
+    padding: 5px 5px;
+}
+
+td {
+    padding: 5px;
+    word-break: break-all;
 }
 
 table {
     table-layout: fixed;
-}
-
-.table-container {
-    padding: 10px;
+    width: 100%;
 }
 
 .content {
@@ -169,6 +233,10 @@ table {
     flex-direction: row;
 }
 
+.tableCard {
+    padding: 10px 10px;
+}
+
 .left-item {
     width: 40%;
     padding: 0 10px;
@@ -176,11 +244,14 @@ table {
 
 .right-item {
     width: 60%;
-    padding: 10px;
+    padding: 0 10px;
 }
 
 .explanation {
-    padding: 0px 20px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: white;
 }
 
 @media (max-width: 800px) {
@@ -188,20 +259,28 @@ table {
         flex-direction: column;
     }
 
-    .left-item,
-    .right-item {
+    .left-item {
         width: 100%;
         margin: 0px;
     }
 
-    .login_register_forms {
+    .right-item {
         width: 100%;
+        margin-top: 20px;
+    }
+
+    .login_register_forms {
+        width: 90%;
         padding: 30px;
     }
 
     table {
         padding: 0px;
         font-size: 60%;
+    }
+
+    .table-dark {
+        background-color: #1E253B;
     }
 
     table button {
