@@ -5,9 +5,9 @@
 }
 
 #logoContainer {
-    background-image: linear-gradient(to bottom, white 50%, #24305C30);
+    background-image: linear-gradient(to bottom, white 50%, #f1f1f1);
     margin: 0;
-    padding: 5px;
+    padding: 15px;
 }
 
 #logo {
@@ -48,7 +48,8 @@
     border: solid #9BB3E050;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
     border-radius: 20px;
-    background-color: #BBBEC850;
+    background-image: linear-gradient(to bottom, white 50%, #f1f1f1);
+    /* background-color: #BBBEC850; */
 }
 
 .mycard:hover {
@@ -103,9 +104,9 @@
 
 .tableButton {
     width: 100%;
-    padding: 5px;
+    height: 100%;
     margin: 0px;
-    font-size: 80%;
+    /* font-size: 80%; */
 }
 
 .filterTransactionsForm {
@@ -114,7 +115,6 @@
 }
 
 .toggle_button {
-    background-color: #24305C;
     border: none;
     color: white;
     padding: 10px 20px;
@@ -146,6 +146,12 @@
     transition: 0.7s;
 }
 
+.topButtons {
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+}
+
 .greenOnHover:hover {
     background-color: green;
     transition: 0.7s;
@@ -158,7 +164,8 @@ nav {
     margin-bottom: 15px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
     border-radius: 5px;
-    background-color: #24305C;
+    background-image: linear-gradient(to bottom, white, #f1f1f1);
+    /* background-color: #24305C20; */
 }
 
 ul.nav {
@@ -167,22 +174,26 @@ ul.nav {
 }
 
 .nav-item {
-    border-radius: 5px;
+    border-radius: 2px;
+    padding: 5px 0px;
+
+}
+
+#formRow {
+    background-image: linear-gradient(to bottom, white 20%, #f1f1f1);
+    border-bottom: solid black;
+}
+
+#formRow td {
+    padding: 20px 2px;
+}
+
+#username {
+    color: black;
 }
 
 .nav-link {
-    color: white;
-    text-decoration: none;
-    display: block;
     border-radius: 10px;
-}
-
-.nav-link.active {
-    color: white;
-}
-
-.nav-link.active:hover {
-    color: black;
 }
 
 .nav-link:hover {

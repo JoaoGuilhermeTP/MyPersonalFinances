@@ -21,14 +21,14 @@
         </h1>
         <header>
             {% if session["user_id"] %}
-            <nav class="bg-light.bg-gradient">
+            <nav>
                 <ul class="nav bg-light.bg-gradient">
-                    <span style="background-color: #000000; border-radius: 50px;" class="nav-link">Logged in as <strong>{{session["username"]}}</strong></span>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Transactions</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/budget">Budget</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/reports">Reports</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="/logout">Log Out</a></li>
-                    <li class="nav-item"><a style="color: red; background-color: #000000; border-radius: 10px" class="nav-link active" aria-current="page" href="/deleteAccount" onclick="return confirmDelete()">Delete Account</a></li>
+                    <li title="Username" class="nav-item"><span id="username" class="nav-link active"><strong>{{session["username"]}}</strong></span></li>
+                    <li title="Transaction" class="nav-item"><a class="nav-link active" aria-current="page" href="/"><img src="../static/transaction.png" alt="Transactions"></a></li>
+                    <li title="Budgets" class="nav-item"><a class="nav-link active" aria-current="page" href="/budget"><img src="../static/budget.png" alt="Budgets"></a></li>
+                    <li title="Reports" class="nav-item"><a class="nav-link active" aria-current="page" href="/reports"><img src="../static/calendar.png" alt="Reports"></a></li>
+                    <li title="Log Out" class="nav-item"><a class="nav-link active" aria-current="page" href="/logout"><img src="../static/logout.png" alt="Log Out"></a></li>
+                    <li title="Delete yoru account" class="nav-item"><a class="nav-link active" aria-current="page" href="/deleteAccount" onclick="return confirmDelete()"><img src="../static/deleteaccount.png" alt="Delete Account"></a></li>
                 </ul>
             </nav>
             {% else %}

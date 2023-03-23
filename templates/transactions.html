@@ -6,11 +6,18 @@
 <script src="/static/transactions.js"></script>
 
 <div class="contentTransactions">
-    <span style="display: flex; justify-content: center;">
-        <button class="toggle_button" hiddenElementId="explanation">Help with this page</button>
-        <button class="toggle_button" hiddenElementId="filterForm">Filter Transactions</button>
-        <button form="deleteAll" type="submit" class="mainFormButton blueButton redOnHover"onclick="return confirmDeleteTransactions()">Delete all transactions</button>
+    <span class="topButtons">
+        <button class="toggle_button" hiddenElementId="explanation" title="Help with this page">
+            <img src="../static/question.png" alt="Help">
+        </button>
+        <button class="toggle_button" hiddenElementId="filterForm" title="Filter transactions">
+            <img src="../static/filter.png" alt="Help">
+        </button>
+        <button form="deleteAll" type="submit" class="mainFormButton redOnHover" title="Delete all transactions" onclick="return confirmDeleteTransactions()">
+            <img src="../static/deleteall.png" alt="Help">
+        </button>
     </span>
+    <form id="deleteAll" action="/deleteAll" method="POST"></form>
 
     <!-- Hidden Element -->
     <div id="explanation" class="explanation mycard hidden">
@@ -71,8 +78,8 @@
         </form>
     </div>
 
-    <div class="mycard tableCard">
-        <table class="tablesorter">
+    <div class="mycard tableCard table-responsive">
+        <table class="tablesorter table">
             <thead>
                 <tr class="table-dark">
                     <th title="Click to sort">DATE</th>
@@ -83,14 +90,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr id="formRow">
                     <form action="add_transaction" method="POST">
                         <td>
                             <input id="date" class="form-control" type="date" required name="date" placeholder="Date">
                         </td>
                         <td>
                             <select id="bank" class="form-select" name="bank">
-                                <option selected>Select the bank</option>
+                                <option selected>Bank</option>
                                 {% for bank in banks %}
                                 <option value="{{bank['bank_name']}}">{{bank['bank_name']}}</option>
                                 {% endfor %}
@@ -98,7 +105,7 @@
                         </td>
                         <td>
                             <select id="category" class="form-select" name="categorie">
-                                <option selected>Select the category</option>
+                                <option selected>Category</option>
                                 {% for category in categories %}
                                 {% if category['in_out'] == 'out' %}
                                 <option style="background-color: AntiqueWhite" value="{{category['category_name']}}">
