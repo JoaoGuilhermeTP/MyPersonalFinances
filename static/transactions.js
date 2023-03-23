@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Select all the table cells in the "VALUE" column
     var cells = document.querySelectorAll("td:nth-child(4)");
+    var cells = Array.from(cells).slice(1);
 
     // Extract the numerical values from the cells
     var values = extractValuesFromCells(cells);
@@ -30,14 +31,23 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     var toggleButtons = document.querySelectorAll(".toggle_button");
-    for (var i = 0; i < toggleButtons.length; i++) {
-    toggleButtons[i].addEventListener("click", function() {
-        var formId = this.getAttribute("form-id");
-        var formElement = document.getElementById(formId);
-        formElement.classList.toggle("hidden");
+    toggleButtons.forEach(function(toggleButton) {
+        toggleButton.addEventListener("click", showElement);
     });
-    }
 });
+
+
+
+
+/**
+ * Handles "click" events on toggle buttons.
+ * @param {Event} event - The event object.
+ */
+function showElement() {
+    var hiddenElementId = this.getAttribute("hiddenElementId");
+    var hiddenElement = document.getElementById(hiddenElementId);
+    hiddenElement.classList.toggle("hidden");
+}
 
 
 
