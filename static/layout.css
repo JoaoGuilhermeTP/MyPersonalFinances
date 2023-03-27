@@ -1,10 +1,6 @@
 #logoContainer {
     display: flex;
     justify-content: center;
-    color: black;
-}
-
-#logoContainer {
     background-image: linear-gradient(to bottom, white 50%, #f1f1f1);
     margin: 0;
     padding: 15px;
@@ -12,8 +8,28 @@
 
 #logo {
     color: #1D337A;
-    text-align: center;
     text-decoration: none;
+}
+
+nav {
+    margin-bottom: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
+    background-image: linear-gradient(to bottom, white, #f1f1f1);
+    display: flex;
+    justify-content: center;
+}
+
+.nav-item {
+    padding: 5px 0px;
+}
+
+.nav-link {
+    border-radius: 10px;
+}
+
+.nav-link:hover {
+    background-color: #f0f0f0;
+    transition: 0.3s;
 }
 
 .login_register_forms {
@@ -29,45 +45,31 @@
     background-color: #f1f1f1;
 }
 
-.login_register_forms:hover {
-    box-shadow: 0px 0px 60px rgba(0, 0, 0, 0.6);
-    background-color: #ffffff;
-    transition: 0.6s;
-}
-
-.login_register_forms:not(hover) {
-    transition: 0.9s;
-}
-
 .mycard {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin: 0px 7px;
-    margin-bottom: 30px;
-    border: solid #9BB3E050;
+    margin: 20px 0px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 1);
     border-radius: 20px;
     background-image: linear-gradient(to bottom, white 50%, #f1f1f1);
-    /* background-color: #BBBEC850; */
 }
 
 .mycard:hover {
     background-color: #f1f1f1;
-    border: solid #263A6160;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5);
     transition: 0.4s;
 }
 
 .mycard:not(hover) {
-    transition: 0.9s;
+    transition: 0.4s;
 }
 
 .hidden {
     display: none;
 }
 
-.buttonContainer {
+.buttonContainerRight {
     display: flex;
     justify-content: right;
 }
@@ -89,7 +91,7 @@
     background-color: #24305C;
 }
 
-.mainFormButton {
+.regularButton {
     border: none;
     color: white;
     padding: 10px 20px;
@@ -106,25 +108,6 @@
     width: 100%;
     height: 100%;
     margin: 0px;
-    /* font-size: 80%; */
-}
-
-.filterTransactionsForm {
-    display: flex;
-    flex-direction: row;
-}
-
-.toggle_button {
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-    border-radius: 5px;
 }
 
 .toggle_button:hover {
@@ -132,24 +115,14 @@
     transition: 0.4s;
 }
 
-.toggle_button:focus {
-    outline: none;
-}
-
-.buttonLink {
+button a {
     text-decoration: none;
     color: white;
 }
 
-.redOnHover:hover {
+button[id="deleteAll"]:hover {
     background-color: red;
     transition: 0.7s;
-}
-
-.topButtons {
-    display: flex;
-    justify-content: center;
-    padding: 15px;
 }
 
 .greenOnHover:hover {
@@ -157,51 +130,22 @@
     transition: 0.7s;
 }
 
-nav {
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    margin-bottom: 15px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.7);
-    border-radius: 5px;
-    background-image: linear-gradient(to bottom, white, #f1f1f1);
-    /* background-color: #24305C20; */
-}
-
-ul.nav {
-    display: flex;
-    justify-content: center;
-}
-
-.nav-item {
-    border-radius: 2px;
-    padding: 5px 0px;
-
-}
-
-#formRow {
-    background-image: linear-gradient(to bottom, white 20%, #f1f1f1);
-    border-bottom: solid black;
-}
 
 #formRow td {
     padding: 20px 2px;
+    background-image: linear-gradient(to bottom, white 20%, #f1f1f1);
 }
 
-#username {
-    color: black;
+.tableCard {
+    padding: 10px 10px;
 }
 
-.nav-link {
-    border-radius: 10px;
+table {
+    table-layout: fixed;
+    width: 100%;
 }
 
-.nav-link:hover {
-    background-color: #f0f0f0;
-    transition: 0.3s;
-}
-
-table th:hover {
+table .columnTitle:hover {
     background-color: #5A79E830;
     color: black;
     cursor: pointer;
@@ -209,11 +153,7 @@ table th:hover {
 }
 
 tr:nth-child(even) {
-    background-color: #788AAD05;
-}
-
-tr:nth-child(odd) {
-    background-color: white;
+    background-color: #788AAD30;
 }
 
 tr:hover {
@@ -227,24 +167,30 @@ tr:hover {
     color: white;
     border-radius: 10px;
     padding: 10px;
-    font-size: 20px;"
+    font-size: 20px;
 }
 
 th {
-    cursor: pointer;
-    background-color: black;
+    background-color: #24305C;
     padding: 5px 5px;
+    color: white;
+}
+
+.addHeader {
+    display:flex;
+    justify-content: center;
+}
+
+#addTransactionButton {
+    font-weight: bolder;
+    font-size: 1.5em;
+    color: green;
+    padding: 1px 6px;
+    width: 100%;
 }
 
 td {
     padding: 5px;
-    word-break: break-all;
-}
-
-
-table {
-    table-layout: fixed;
-    width: 100%;
 }
 
 .content {
@@ -252,17 +198,6 @@ table {
     width: 100%;
     justify-content: space-around;
     flex-direction: row;
-}
-
-.contentTransactions {
-    display: flex;
-    width: 100%;
-    justify-content: space-around;
-    flex-direction: column;
-}
-
-.tableCard {
-    padding: 10px 10px;
 }
 
 .left-item {
@@ -279,10 +214,9 @@ table {
     text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
-    background-color: white;
 }
 
-@media (max-width: 700px) {
+@media all and (max-width: 700px) {
     .content {
         flex-direction: column;
     }
@@ -294,7 +228,7 @@ table {
 
     .right-item {
         width: 100%;
-        margin-top: 20px;
+        margin: 0px;
     }
 
     .login_register_forms {
@@ -302,9 +236,27 @@ table {
         padding: 30px;
     }
 
-    table {
+    /* table {
         display: block;
         overflow-x: auto;
-        white-space: nowrap;
+        white-space: wrap;
+    } */
+}
+
+@media all and (max-width:700px) {
+
+    .mytable .transactionRow {
+        display: table;
+        width: 100%;
     }
+
+    .mytable td {
+        display: table-row;
+        width: 100%;
+    }
+
+    .transactionDate {
+        font-weight: bold;
+    }
+
 }

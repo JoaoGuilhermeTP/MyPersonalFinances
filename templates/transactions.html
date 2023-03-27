@@ -5,172 +5,170 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.2/js/jquery.tablesorter.min.js"></script>
 <script src="/static/transactions.js"></script>
 
-<div class="contentTransactions">
-    <span class="topButtons">
-        <button class="toggle_button" hiddenElementId="explanation" title="Help with this page">
-            <img src="../static/question.png" alt="Help">
-        </button>
-        <button class="toggle_button" hiddenElementId="filterForm" title="Filter transactions">
-            <img src="../static/filter.png" alt="Help">
-        </button>
-        <button form="deleteAll" type="submit" class="mainFormButton redOnHover" title="Delete all transactions" onclick="return confirmDeleteTransactions()">
+<div class="buttonContainerCenter">
+    <button class="regularButton toggle_button" hiddenElementId="explanation" title="Help with this page">
+        <img src="../static/question.png" alt="Help">
+    </button>
+    <button class="regularButton toggle_button" hiddenElementId="filterForm" title="Filter transactions">
+        <img src="../static/filter.png" alt="Help">
+    </button>
+    <form id="deleteAll" action="/deleteAll" method="POST">
+        <button id="deleteAll" type="submit" class="regularButton" title="Delete all transactions" onclick="return confirmDeleteTransactions()">
             <img src="../static/deleteall.png" alt="Help">
         </button>
-    </span>
-    <form id="deleteAll" action="/deleteAll" method="POST"></form>
-
-    <!-- Hidden Element -->
-    <div id="explanation" class="explanation mycard hidden">
-        <h2>Transactions</h2>
-        <p>Here you can add, delete and see your transactions. Use the <strong>"Add transactions"</strong> menu to
-            insert
-            the information for the transaction you want to add.</p>
-        <p>In order to better visualize your transactions, you can use the <strong>"Filter Transactions"</strong> menu
-            to
-            specify which ones you want focus</p>
-    </div>
-
-    <!-- Hidden Element -->
-    <div id="filterForm" class="mycard hidden">
-        <form id="filterTransactionsForm" action="/" method="POST">
-            <div class="mb-3 input-group">
-                <label for="start_date" class="input-group-text" id="basic-addon1">Start date</label>
-                <input value="{{filt['start_date']}}" type="date" name="start_date" id="start_date"
-                    class="form-control">
-                <label for="end_date" class="input-group-text" id="basic-addon1">End date</label>
-                <input value="{{filt['end_date']}}" type="date" name="end_date" id="end_date" class="form-control">
-            </div>
-            <div class="mb-3 input-group">
-                <label for="filter_bank" class="input-group-text" id="basic-addon1">Bank</label>
-                <select class="form-select" id="filter_bank" name="filter_bank">
-                    {% if filt['filter_bank'] %}
-                    {% for bank in current_banks %}
-                    {% if bank == filt['filter_bank'] %}
-                    <option selected value="{{bank}}">{{bank}}</option>
-                    {% else %}
-                    <option value="{{bank}}">{{bank}}</option>
-                    {% endif %}
-                    {% endfor %}
-                    {% else %}
-                    <option value="">No bank filter applied</option>
-                    {% for bank in current_banks %}
-                    <option value="{{bank}}">{{bank}}</option>
-                    {% endfor %}
-                    {% endif %}
-                </select>
-                <label for="filter_category" class="input-group-text">Category</label>
-                <select class="form-select" id="filter_category" name="filter_category">
-                    {% if filt["filter_category"] %}
-                    <option selected value="{{filt['filter_category']}}">{{filt["filter_category"]}}</option>
-                    {% else %}
-                    <option selected value="">No category filter applied</option>
-                    {% endif %}
-                    {% for category in current_categories %}
-                    <option value="{{category}}">{{category}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="buttonContainer">
-                <button type="submit" class="mainFormButton blueButton">Filter</button>
-                <span><button class="mainFormButton blueButton"><a class="buttonLink" href="/">Clear
-                            Filters</a></button></span>
-            </div>
-        </form>
-    </div>
-
-    <div class="mycard tableCard table-responsive">
-        <table class="tablesorter table">
-            <thead>
-                <tr class="table-dark">
-                    <th title="Click to sort">DATE</th>
-                    <th title="Click to sort">BANK</th>
-                    <th title="Click to sort">CATEGORIE</th>
-                    <th title="Click to sort" data-sort-type="number">VALUE</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="formRow">
-                    <form action="add_transaction" method="POST">
-                        <td>
-                            <input id="date" class="form-control" type="date" required name="date" placeholder="Date">
-                        </td>
-                        <td>
-                            <select id="bank" class="form-select" name="bank">
-                                <option selected>Bank</option>
-                                {% for bank in banks %}
-                                <option value="{{bank['bank_name']}}">{{bank['bank_name']}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                        <td>
-                            <select id="category" class="form-select" name="categorie">
-                                <option selected>Category</option>
-                                {% for category in categories %}
-                                {% if category['in_out'] == 'out' %}
-                                <option style="background-color: AntiqueWhite" value="{{category['category_name']}}">
-                                    {{category['category_name']}}</option>
-                                {% else %}
-                                <option style="background-color: PaleGreen" value="{{category['category_name']}}">
-                                    {{category['category_name']}}</option>
-                                {% endif %}
-                                {% endfor %}
-                            </select>
-                        </td>
-                        <td>
-                            <input id="value" type="number" step="0.01" class="form-control" id="value" required
-                                name="value" placeholder="Value">
-                        </td>
-                        <td>
-                            <button type="submit" class="tableButton mainFormButton greenButton"
-                                value="Add">Add</button>
-                        </td>
-                    </form>
-                </tr>
-                {% for transaction in transactions %}
-                {% set show = True %}
-                {% if filt["start_date"] %}
-                {% if transaction["date"] < filt["start_date"] %} {% set show=False %} {% endif %} {% endif %} {% if
-                    filt["end_date"] %} {% if transaction["date"]> filt["end_date"] %}
-                    {% set show = False %}ls
-
-                    {% endif %}
-                    {% endif %}
-                    {% if filt["filter_bank"] %}
-                    {% if transaction["bank"] != filt["filter_bank"] %}
-                    {% set show = False %}
-                    {% endif %}
-                    {% endif %}
-                    {% if filt["filter_category"] %}
-                    {% if transaction["categorie"] != filt["filter_category"] %}
-                    {% set show = False %}
-                    {% endif %}
-                    {% endif %}
-                    {% if show %}
-                    <tr>
-                        <td>
-                            {{transaction["date"]}}
-                        </td>
-                        <td>
-                            {{transaction["bank"]}}
-                        </td>
-                        <td>
-                            {{transaction["categorie"]}}
-                        </td>
-                        <td>
-                            {{transaction["value"]}}
-                        </td>
-                        <td>
-                            <form action="/delete_transaction" method="POST">
-                                <input type="hidden" value='{{transaction["id"]}}' name="transaction_id">
-                                <button class="tableButton mainFormButton redButton" type="submit">Del</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-            </tbody>
-        </table>
-    </div>
+    </form>
 </div>
+
+<!-- Hidden Element -->
+<div id="explanation" class="explanation mycard hidden">
+    <h2>Transactions</h2>
+    <p>Here you can add, delete and see your transactions. Use the <strong>column's first row</strong> menu to insert the information for the transaction you want to add.</p>
+    <p>In order to better visualize your transactions, you can click the <strong>filter button above</strong> to specify which ones you want focus</p>
+</div>
+
+<!-- Hidden Element -->
+<div id="filterForm" class="mycard hidden">
+    <form action="/" method="POST">
+        <div class="mb-3 input-group">
+            <label for="start_date" class="input-group-text">Start date</label>
+            <input value="{{filt['start_date']}}" type="date" name="start_date" id="start_date" class="form-control">
+            <label for="end_date" class="input-group-text">End date</label>
+            <input value="{{filt['end_date']}}" type="date" name="end_date" id="end_date" class="form-control">
+        </div>
+        <div class="mb-3 input-group">
+            <label for="filter_bank" class="input-group-text">Bank</label>
+            <select class="form-select" id="filter_bank" name="filter_bank">
+                {% if filt['filter_bank'] %}
+                {% for bank in current_banks %}
+                {% if bank == filt['filter_bank'] %}
+                <option selected value="{{bank}}">{{bank}}</option>
+                {% else %}
+                <option value="{{bank}}">{{bank}}</option>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <option value="">No bank filter applied</option>
+                {% for bank in current_banks %}
+                <option value="{{bank}}">{{bank}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+            <label for="filter_category" class="input-group-text">Category</label>
+            <select class="form-select" id="filter_category" name="filter_category">
+                {% if filt["filter_category"] %}
+                <option selected value="{{filt['filter_category']}}">{{filt["filter_category"]}}</option>
+                {% else %}
+                <option selected value="">No category filter applied</option>
+                {% endif %}
+                {% for category in current_categories %}
+                <option value="{{category}}">{{category}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="buttonContainerRight">
+            <button type="submit" class="regularButton blueButton">Filter</button>
+            <button class="regularButton blueButton"><a href="/">Clear Filters</a></button>
+        </div>
+    </form>
+</div>
+
+<div class="mycard tableCard">
+
+    <table class="tablesorter mytable">
+
+        <thead>
+            <tr class="transactionRow">
+                <th class="columnTitle" title="Click to sort">DATE</th>
+                <th class="columnTitle" title="Click to sort">BANK</th>
+                <th class="columnTitle" title="Click to sort">CATEGORIE</th>
+                <th class="columnTitle" title="Click to sort">VALUE</th>
+                <th class="addHeader"><button id="addTransactionButton" class="regularButton toggle_button teste" hiddenElementId="formRow" title="Add Transaction">+</button></th>
+            </tr>
+        </thead>
+
+        <tbody id="formRowContainer" class="tablesorter-infoOnly"> <!---This is to prevent the first row of being sorted-->
+            <tr id="formRow" class="hidden">
+                <form action="add_transaction" method="POST">
+                    <td>
+                        <input id="date" class="form-control" type="date" required name="date">
+                    </td>
+                    <td>
+                        <select id="bank" class="form-select" name="bank">
+                            <option disabled selected >Bank</option>
+                            {% for bank in banks %}
+                            <option value="{{bank['bank_name']}}">{{bank['bank_name']}}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select id="category" class="form-select" name="categorie">
+                            <option disabled selected >Category</option>
+                            {% for category in categories %}
+                            {% if category['in_out'] == 'out' %}
+                            <option style="background-color: AntiqueWhite" value="{{category['category_name']}}">
+                                {{category['category_name']}}</option>
+                            {% else %}
+                            <option style="background-color: PaleGreen" value="{{category['category_name']}}">
+                                {{category['category_name']}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <input id="value" type="number" step="0.01" class="form-control" required name="value" placeholder="$">
+                    </td>
+                    <td>
+                        <button type="submit" class="tableButton regularButton greenButton" value="Add">Add</button>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+
+        <tbody> <!---Second tbody for rows that can be sorted-->
+            {% for transaction in transactions %}
+            {% set show = True %}
+            {% if filt["start_date"] %}
+            {% if transaction["date"] < filt["start_date"] %} {% set show=False %} {% endif %} {% endif %} {% if
+                filt["end_date"] %} {% if transaction["date"]> filt["end_date"] %}
+                {% set show = False %}ls
+
+                {% endif %}
+                {% endif %}
+                {% if filt["filter_bank"] %}
+                {% if transaction["bank"] != filt["filter_bank"] %}
+                {% set show = False %}
+                {% endif %}
+                {% endif %}
+                {% if filt["filter_category"] %}
+                {% if transaction["categorie"] != filt["filter_category"] %}
+                {% set show = False %}
+                {% endif %}
+                {% endif %}
+                {% if show %}
+                <tr class="transactionRow">
+                    <td class="transactionDate">
+                        {{transaction["date"]}}
+                    </td>
+                    <td>
+                        {{transaction["bank"]}}
+                    </td>
+                    <td>
+                        {{transaction["categorie"]}}
+                    </td>
+                    <td>
+                        {{transaction["value"]}}
+                    </td>
+                    <td>
+                        <form action="/delete_transaction" method="POST">
+                            <input type="hidden" value='{{transaction["id"]}}' name="transaction_id">
+                            <button class="tableButton regularButton redButton" type="submit">Del</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock content %}
