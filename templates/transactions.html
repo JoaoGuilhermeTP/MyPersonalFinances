@@ -90,10 +90,10 @@
             <tr id="formRow" class="hidden">
                 <form action="add_transaction" method="POST">
                     <td>
-                        <input id="date" class="form-control" type="date" required name="date">
+                        <input id="date" class="form-control" type="date" required name="date" placeholder="Date">
                     </td>
                     <td>
-                        <select id="bank" class="form-select" name="bank">
+                        <select id="bank" class="form-select" name="bank" placeholder="Select the bank">
                             <option disabled selected >Bank</option>
                             {% for bank in banks %}
                             <option value="{{bank['bank_name']}}">{{bank['bank_name']}}</option>
@@ -101,7 +101,7 @@
                         </select>
                     </td>
                     <td>
-                        <select id="category" class="form-select" name="categorie">
+                        <select id="category" class="form-select" name="categorie" placeholder="Select the category">
                             <option disabled selected >Category</option>
                             {% for category in categories %}
                             {% if category['in_out'] == 'out' %}
@@ -115,7 +115,7 @@
                         </select>
                     </td>
                     <td>
-                        <input id="value" type="number" step="0.01" class="form-control" required name="value" placeholder="$">
+                        <input id="value" type="number" step="0.01" class="form-control" required name="value" placeholder="Value">
                     </td>
                     <td>
                         <button type="submit" class="tableButton regularButton greenButton" value="Add">Add</button>
