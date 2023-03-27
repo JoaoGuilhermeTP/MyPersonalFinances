@@ -84,7 +84,7 @@ nav {
 }
 
 .redButton {
-    background-color: red;
+    background-color: #ff0000;
 }
 
 .blueButton {
@@ -257,6 +257,10 @@ td {
 
     .transactionDate {
         font-weight: bold;
+        font-size: 1.2em;
     }
 
+    #formRow td {
+        padding: 5px;
+    }
 }
